@@ -1,0 +1,72 @@
+<form action="" [hidden]="!show">
+    <div class="form-group" style="width: 18rem;">
+        <input [(ngModel)]="name" type="text" class="form-control" name="player" id="forPlayer" placeholder="Name">
+        <button class="btn btn-primary" (click)="onSave(name)">Save</button>
+    </div>
+</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div [ngClass]="{'card': true,'atk': !isAtk, 'damaged': !isDamaged, 'dodge': !isDodging, 'critical': !isCritical}"
+                style="width: 18rem;">
+                <div class="card-header font-weight-bold text-center">
+                    {{name}}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Stats</h5>
+                    <hr>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuemax="100" [style.width]="HP + '%'">
+                            <p class="card-text text-center">HP: {{HP}}</p>
+                        </div>
+                    </div>
+                    <p class="card-text text-center">ATK: {{ATK}}</p>
+                    <hr>
+                    <button class="btn btn-primary" (click)="startBattle($event)" [hidden]="showEnemy" style="margin-right: 10px;">Battle</button>
+
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                        aria-expanded="false" aria-controls="collapseExample">
+                        Inventory
+                    </button>
+
+                    <div class="collapse" id="collapseExample" style="margin-top: 10px;">
+                        <app-item *ngFor="let item of Inventory" [item]></app-item>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div [hidden]="!showEnemy">
+                <div [ngClass]="{'card': true,'eAtk': !isEAtk, 'damaged': !isDamaged2, 'dodge': !isDodging2, 'criticalE': !isCriticalE, 'pushbackE': !isCriticalPB, 'dead': isDead, 'criticalDeath': isCritDeath}"
+                    style="width: 18rem;">
+                    <div class="card-header font-weight-bold text-center">
+                        {{eName}}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Stats</h5>
+                        <hr>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuemax="100" [style.width]="eHP + '%'">
+                                <p class="card-text text-center">HP: {{eHP}}</p>
+                            </div>
+                        </div>
+                        <p class="card-text text-center">ATK: {{eATK}}</p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div [hidden]="!isDrop">
+                <app-item></app-item>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="container h-100 d-flex">
+    <div class="jumbotron my-auto" style="width: 40rem;">
+        <h1 class="display-3">
+            Battle: <span>{{ battleText }}</span>
+        </h1>
+    </div>
+</div>
